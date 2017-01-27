@@ -1,3 +1,10 @@
 #!/bin/bash
+npm install
 
-xvfb-run -a --server-args="-screen 0 ${SCREEN_RES}" protractor $@
+su builder -c "
+
+  dbus-launch --exit-with-session
+  echo \"$@:\"
+  xvfb-run -a --server-args=\"-screen 0 ${SCREEN_RES}\" protractor $@
+
+"
