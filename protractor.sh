@@ -1,7 +1,7 @@
 #!/bin/bash
 npm install
 
-su builder -c "
+su robocop -c "
 
   dbus-launch --exit-with-session
   echo \"$@:\"
