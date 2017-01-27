@@ -1,6 +1,6 @@
 #!/bin/bash
 npm install
-
+chmod 777 /protractor
 su robocop -c "
 
   dbus-launch --exit-with-session
