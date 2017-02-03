@@ -10,32 +10,53 @@ PhantomJS is [discouraged by Protractor creators](https://angular.github.io/prot
 
 To be perfectly honest - it is a [real chrome running on xvfb](http://tobyho.com/2015/01/09/headless-browser-testing-xvfb/). Therefore you have every confidence that the tests are run on the real thing.
 
-# Usage
+# Build latest headless-horseman
+
+```bash
+
+git clone https://github.com/bo01ean/docker-protractor-headless headless-horseman
+cd headless-horseman
+docker build . -t headless-horseman
 
 ```
-docker run -it --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
+
+# Create 'test-headless' npm task in package.json
+
+### *put /protractor.sh where you would normally call protractor*
+
+```json
+
+{
+  "test": "ENVIRONMENT=dev protractor.sh e2e-tests/protractor.conf.js", // normally
+  "test-headless": "ENVIRONMENT=dev /protractor.sh e2e-tests/protractor.conf.js", // headless-horseman
+}
+
 ```
 
-This will run protractor in your current directory, so you should run it in your tests root directory. It is useful to create a script, for example /usr/local/bin/protractor.sh such as this:
+# Run headless-horseman on your code
+
+## From macOS:
+```bash
+
+cd - ## Assumes you were in your webapp before
+docker run --privileged --net=host -it -v `pwd`:/protractor headless-horseman
 
 ```
-#!/bin/bash
 
-docker run -it --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless $@
+## From Linux host:
+```bash
+
+cd - ## Assumes you were in your webapp before
+docker run --privileged --net=host -it -v `pwd`:/protractor -v /dev/shm:/dev/shm headless-horseman
+
 ```
-
-The script will allow you to run dockerised protractor like so:
-
-```
-protractor.sh [protractor options]
-```
-
 
 ## Setting up custom screen resolution
-
 The default screen resolution is **1280x1024** with **24-bit color**. You can set a custom screen resolution and color depth via the **SCREEN_RES** env variable, like this:
-```
-docker run -it --privileged --rm --net=host -e SCREEN_RES=1920x1080x24 -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
+```bash
+
+docker run -it --privileged --rm --net=host -e SCREEN_RES=1920x1080x24 -v /dev/shm:/dev/shm -v $(pwd):/protractor headless-horseman
+
 ```
 
 

@@ -1,4 +1,4 @@
-user="robocop"
+user="testerguy"
 ## create user if he doesn't exist or I am not him
 if whoami | grep -q $user;
 then
