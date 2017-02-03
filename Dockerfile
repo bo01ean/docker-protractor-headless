@@ -17,16 +17,12 @@ RUN apt-get install -y google-chrome-stable
 RUN apt-get clean
 
 ADD addUser.sh /addUser.sh
-RUN /addUser.sh
-#RUN rm google-chrome-stable_current_amd64.deb
-RUN mkdir /protractor
-
-RUN webdriver-manager update
 ADD protractor.sh /protractor.sh
 ADD runtests.sh /runtests.sh
-# Fix for the issue with Selenium, as described here:
-# https://github.com/SeleniumHQ/docker-selenium/issues/87
-# ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+
+RUN /addUser.sh
+RUN mkdir /protractor
 ENV SCREEN_RES=1280x1024x24
+
 WORKDIR /protractor
 ENTRYPOINT ["/runtests.sh"]
