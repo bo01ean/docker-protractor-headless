@@ -3,10 +3,11 @@ MAINTAINER kelvin.beats@gmail.com
 WORKDIR /tmp
 RUN apt-get update
 RUN apt-get install -y curl apt-utils xvfb wget default-jre vim git
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs
-##RUN npm install -g npm@3.10.7
-RUN curl -L https://www.npmjs.com/install.sh | sh
+
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get install -y --allow-unauthenticated nodejs
+RUN apt-get install -y build-essential
+
 RUN npm install -g protractor bower mocha jasmine n
 RUN n 6.3.1
 RUN webdriver-manager update
