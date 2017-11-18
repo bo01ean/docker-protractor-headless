@@ -1,2 +1,2 @@
 #!/bin/bash
-npm run test-headless
+npm run e2e
