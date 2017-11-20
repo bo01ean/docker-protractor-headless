@@ -48,7 +48,7 @@ RUN su $TEST_USER -c "sudo mv $LAUNCHER /usr/bin/meteor"
 RUN ls -la /usr/bin/meteor
 
 RUN mkdir /protractor
-ENV SCREEN_RES=800x600x16
+ENV SCREEN_RES=1280x1024x24
 #
 ADD protractor.sh /protractor.sh
 ADD runtests.sh /runtests.sh
