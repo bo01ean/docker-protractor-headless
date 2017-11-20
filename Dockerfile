@@ -29,18 +29,30 @@ RUN apt-get install -y google-chrome-stable
 ## Clean up
 RUN apt-get clean
 
+ENV TEST_USER testerguy
+RUN echo "Adding test user: $TEST_USER"
 ADD addUser.sh /addUser.sh
+RUN /addUser.sh $TEST_USER
 
-RUN /addUser.sh
+ENV DEBIAN_FRONTEND noninteractive
+RUN echo N | apt-get install -y sudo
+RUN echo "$TEST_USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-RUN su testerguy -c "echo 'Installing meteor:'; curl -k https://install.meteor.com/?release=1.5.2.2 | sh"
+ENV METEOR_VERSION 1.5.2.2
+ENV LAUNCHER /dev/null
+
+RUN echo "Installing: meteor: $METEOR_VERSION"
+RUN su $TEST_USER -c "curl -k https://install.meteor.com/?release=$METEOR_VERSION | sh"
+RUN su $TEST_USER -c "sudo mv $LAUNCHER /usr/bin/meteor"
+
+RUN ls -la /usr/bin/meteor
+
 RUN mkdir /protractor
-ENV SCREEN_RES=1280x1024x24
-
+ENV SCREEN_RES=800x600x16
+#
 ADD protractor.sh /protractor.sh
 ADD runtests.sh /runtests.sh
 
-RUN echo y | apt-get install -y sudo
-
+#
 WORKDIR /protractor
 ENTRYPOINT ["/runtests.sh"]
