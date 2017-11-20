@@ -20,7 +20,7 @@ RUN npm install -g protractor bower mocha jasmine grunt-cli puppeteer gulp@lates
 RUN webdriver-manager update
 ## RUN curl -k https://install.meteor.com/?release=1.5.2.2 | sh
 
-## Install chrome
+# Install chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 RUN apt-get update
@@ -43,12 +43,10 @@ ENV LAUNCHER /dev/null
 
 RUN echo "Installing: meteor: $METEOR_VERSION"
 RUN su $TEST_USER -c "curl -k https://install.meteor.com/?release=$METEOR_VERSION | sh"
-RUN su $TEST_USER -c "sudo mv $LAUNCHER /usr/bin/meteor"
-
-RUN ls -la /usr/bin/meteor
 
 RUN mkdir /protractor
 ENV SCREEN_RES=1280x1024x24
+ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 #
 ADD protractor.sh /protractor.sh
 ADD runtests.sh /runtests.sh

@@ -6,5 +6,5 @@ su testerguy -c "
   TMPDIR=/tmp
   # whoami
   # sudo whoami
-  xvfb-run -a --server-args=\"-screen 0 ${SCREEN_RES}\" gulp
+  DBUS_SESSION_BUS_ADDRESS=/dev/null xvfb-run -a --server-args=\"-screen 0 ${SCREEN_RES}\" gulp test
 "

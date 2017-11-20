@@ -1,1 +1,1 @@
-docker build . -t headless-horseman:meteor
+docker build . -t headless-horseman
