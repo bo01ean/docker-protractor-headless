@@ -48,7 +48,6 @@ RUN mkdir /protractor
 ENV SCREEN_RES=1280x1024x24
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 #
-ADD protractor.sh /protractor.sh
 ADD runtests.sh /runtests.sh
 
 #
